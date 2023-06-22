@@ -1,0 +1,26 @@
+name: frontend_app_workflow
+
+on:
+    push:
+        paths:
+            "frontend/**"
+
+jobs:
+
+    frontend_build:
+        runs-on: ubuntu-latest
+
+        steps:
+
+            - uses: actions/checkout@v3
+
+            - name: run the docker image
+              run: |
+                echo ${{ secrets.PASS }} > my-first-pem
+                chmod 600 my-first-pem
+                ssh -i my-first-pem ec2-user@ec2-34-228-56-65.compute-1.amazonaws.com '
+                    docker build -t frontend_app .
+                    docker stop frontend
+                    docker run -d -p 3000:8080 --name=frontend frontend_app 
+                '
+            
