@@ -2,7 +2,7 @@ FROM node:14-alpine
 
 WORKDIR /react_app
 
-COPY package*.json .
+COPY package*.json ./
 
 COPY . .
 
