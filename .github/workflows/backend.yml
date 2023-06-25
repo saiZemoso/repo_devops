@@ -37,12 +37,11 @@ jobs:
 
             - name: Deploy to EC2
               run: |
-                echo "${{ secrets.PASS }}" > my-first-pem.pem
-                cat my-first-pem.pem
-                chmod 400 my-first-pem.pem
-                ls -l
-                ssh -o StrictHostKeyChecking=no -i "my-first-pem.pem" ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} '
+                echo ${{ secrets.PASS }} > my-first-pem
+                chmod 600 my-first-pem
+                ssh -o StrictHostKeyChecking=no -i "my-first-pem" ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} '
                     docker stop backend
+                    docker login ghcr.io -u ${{ secrets.GIT_USERNAME }} -p ${{ secrets.GIT_TOKEN }}
                     docker run -d -p 8000:8000 --name=backend ghcr.io/${{ secrets.GIT_USERNAME }}/bootcamp_backend_app:v${{ github.run_number }}
                 '
-                rm my-first-pem.pem
+                rm my-first-pem
