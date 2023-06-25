@@ -4,7 +4,7 @@ WORKDIR /backend_app
 
 COPY . .
 
-COPY target/GreenCommute-*.jar backend.jar
+COPY target/GreenCommute*.jar backend.jar
 
 EXPOSE 8000
 
