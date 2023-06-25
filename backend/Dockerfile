@@ -1,13 +1,11 @@
-FROM openjdk
+FROM openjdk:11.0.11-jdk
 
 WORKDIR /backend_app
 
-RUN mvn clean install
+COPY . .
 
-COPY ./target/GreenCommute*.jar backend.jar
+COPY target/GreenCommute-*.jar backend.jar
 
-# COPY ./target/ja
-
-EXPOSE 8080
+EXPOSE 8000
 
 ENTRYPOINT [ "java","-jar","backend.jar" ]
